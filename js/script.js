@@ -98,11 +98,7 @@ window.addEventListener("DOMContentLoaded", function () {
 function formValidate() {
   const form = document.querySelector(".forma"),
     errorFields = form.querySelectorAll(".forma__error"),
-    btn = form.querySelector("button"),
-    emailInput = form.querySelector(".email"),
-    telInput = form.querySelector(".tel"),
-    nameInput = form.querySelector(".name"),
-    textInput = form.querySelector(".textarea");
+    btn = form.querySelector("button");
 
   btn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -112,16 +108,12 @@ function formValidate() {
   });
 
   form.addEventListener("change", (e) => {
-    if (e.target.matches(".email")) validateField(emailInput, validateEmail);
-    if (e.target.matches(".tel")) validateField(telInput, validateTel);
-    if (e.target.matches(".name")) validateField(nameInput, validateText);
-    if (e.target.matches(".textarea"))
-      validateField(textInput, validateTextarea);
+    if (e.target.matches(".email")) validateEmail(e.target);
+    if (e.target.matches(".tel")) validateTel(e.target);
+    if (e.target.matches(".name")) validateText(e.target)
+    if (e.target.matches(".textarea")) validateTextarea(e.target);
   });
 
-  function validateField(input, validationFunc) {
-    validationFunc(input);
-  }
 
   function validateEmail(input) {
     const pattern = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/;
@@ -170,9 +162,7 @@ function formValidate() {
   function checkFullField(forma) {
     const inputRequired = forma.querySelectorAll("[required]");
     inputRequired.forEach((input) => {
-      input.nextElementSibling.innerHTML = !input.value
-        ? "Поле, обязательное для заполнения"
-        : "";
+      if (!input.value) input.nextElementSibling.innerHTML = "Поле, обязательное для заполнения";
     });
   }
 }
